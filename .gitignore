@@ -1,23 +1,39 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Node.js
+node_modules/
 
-# dependencies
-/node_modules
+# React build
+/build/
+dist/
+.eslintcache
+/.cache
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
 /.pnp
 .pnp.js
 
-# testing
-/coverage
+# IDEs and editors
+.vscode/
+.idea/
 
-# production
-/build
-
-# misc
+# Operating system files
 .DS_Store
+Thumbs.db
+
+# npm package-lock and yarn lock files
+package-lock.json
+yarn.lock
+
+# Coverage folder for testing
+coverage/
+
+# dotenv files
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
