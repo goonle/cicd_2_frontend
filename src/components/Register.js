@@ -36,7 +36,7 @@ function Register() {
               Register
             </label>
             <input type="text" name="username" placeholder="Username" required />
-            <input type="text" name="password" placeholder="Password" required />
+            <input type="password" name="password" placeholder="Password" required />
             <button type="submit">Register</button>
           </form>
         </div>
