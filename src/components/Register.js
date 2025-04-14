@@ -36,7 +36,7 @@ function Register() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = {
-      email: formData.get("email"),
+      username: formData.get("username"),
       password: formData.get("password"),
     };
 
@@ -90,7 +90,12 @@ function Register() {
             <label htmlFor="chk" aria-hidden="true">
               Login
             </label>
-            <input type="email" name="email" placeholder="Email" required />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              required
+            />
             <input
               type="password"
               name="password"
