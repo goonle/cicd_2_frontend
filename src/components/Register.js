@@ -90,8 +90,13 @@ function Register() {
             <label htmlFor="chk" aria-hidden="true">
               Login
             </label>
-            <input type="email" name="email" placeholder="Email" />
-            <input type="password" name="password" placeholder="Password" />
+            <input type="email" name="email" placeholder="Email" required />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
             <button type="submit">Login</button>
           </form>
         </div>
