@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -27,11 +26,11 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Cache build artifacts
-        uses: actions/cache@v3
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
         with:
-          path: build
-          key: ${{ runner.os }}-build-${{ github.sha }}
+          name: build-files
+          path: build/
 
   test:
     name: Test
@@ -45,7 +44,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
