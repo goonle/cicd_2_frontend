@@ -1,25 +1,29 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BASE_URL } from "../utils/api-helper";
 
-function Register() {
-  const [activeTab, setActiveTab] = useState("login");
+function Register({ activeTab }) {
+  const [isChecked, setIsChecked] = useState(activeTab === "login");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // Generic form submission handler
+  useEffect(() => {
+    if (activeTab) {
+      setIsChecked(activeTab === "login");
+    }
+  }, [activeTab]);
+
   const handleSubmit = async (endpoint, formData, successMessage) => {
     try {
       const response = await axios.post(`${BASE_URL}${endpoint}`, formData);
-      console.log(`${successMessage}:`, response.data);
       alert(successMessage);
       return response.data;
     } catch (error) {
       console.error(`Request failed:`, error);
-      alert(`Request failed. ${error.message}`);
-      throw error;
+      setErrorMessage(`Request failed: ${error.message}`);
+      return null;
     }
   };
 
-  // Handle register form submission
   const handleRegister = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -28,10 +32,10 @@ function Register() {
       password: formData.get("password"),
     };
 
+    setErrorMessage("");
     await handleSubmit("register/", data, "Registration successful!");
   };
 
-  // Handle login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -40,73 +44,54 @@ function Register() {
       password: formData.get("password"),
     };
 
+    setErrorMessage("");
     await handleSubmit("login/", data, "Login successful!");
   };
 
-  // Toggle between login and register tabs
-  const toggleTab = () => {
-    setActiveTab(activeTab === "login" ? "register" : "login");
-    document.getElementById("chk").checked = activeTab === "login";
-  };
-
   return (
-    <>
-      <title>Account Access</title>
-      <link rel="stylesheet" type="text/css" href="style.css" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap"
-        rel="stylesheet"
+    <div className="main">
+      <input
+        type="checkbox"
+        id="chk"
+        checked={isChecked}
+        onChange={() => setIsChecked(!isChecked)}
+        aria-hidden="true"
       />
-      <div className="main">
-        <input
-          type="checkbox"
-          id="chk"
-          aria-hidden="true"
-          checked={activeTab === "register"}
-          onChange={toggleTab}
-        />
-        <div className="signup">
-          <form onSubmit={handleRegister}>
-            <label htmlFor="chk" aria-hidden="true">
-              Register
-            </label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-            <button type="submit">Register</button>
-          </form>
-        </div>
-        <div className="login">
-          <form onSubmit={handleLogin}>
-            <label htmlFor="chk" aria-hidden="true">
-              Login
-            </label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-            <button type="submit">Login</button>
-          </form>
-        </div>
+
+      <div className="signup">
+        <form onSubmit={handleRegister}>
+          <label htmlFor="chk" aria-hidden="true">
+            Sign up
+          </label>
+          <input type="text" name="username" placeholder="User name" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Sign up</button>
+        </form>
       </div>
-    </>
+
+      <div className="login">
+        <form onSubmit={handleLogin}>
+          <label htmlFor="chk" aria-hidden="true">
+            Login
+          </label>
+          <input type="text" name="username" placeholder="Username" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+    </div>
   );
 }
 
