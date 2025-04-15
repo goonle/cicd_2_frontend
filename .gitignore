@@ -25,7 +25,6 @@ yarn-error.log*
 Thumbs.db
 
 # npm package-lock and yarn lock files
-package-lock.json
 yarn.lock
 
 # Coverage folder for testing
