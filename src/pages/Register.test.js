@@ -10,12 +10,20 @@ import {
 } from "@testing-library/react";
 import Register from "./Register";
 import axios from "axios";
-
+import { ToastProvider } from "../context/ToastContext";
 jest.mock("axios");
+
+const renderWithToast = (ui) => {
+  return render(
+    <ToastProvider>
+      {ui}
+    </ToastProvider>
+  );
+};
 
 describe("Register Component", () => {
   it("renders the login form", () => {
-    render(<Register />);
+    renderWithToast(<Register />);
     expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
     expect(screen.getAllByPlaceholderText("Username")).toHaveLength(1); // optional
   });
@@ -24,7 +32,7 @@ describe("Register Component", () => {
     // Mock axios response
     axios.post.mockResolvedValue({ data: { message: "Login successful" } });
 
-    render(<Register activeTab="login" />);
+    renderWithToast(<Register activeTab="login" />);
 
     // Find the login form
     const loginLabel = screen.getByText("Login", { selector: "label" });
@@ -54,7 +62,7 @@ describe("Register Component", () => {
   it("shows error message on login failure", async () => {
     axios.post.mockRejectedValue(new Error("Login failed"));
 
-    render(<Register activeTab="login" />);
+    renderWithToast(<Register activeTab="login" />);
 
     const loginLabel = screen.getByText("Login", { selector: "label" });
     expect(loginLabel).toBeVisible();
