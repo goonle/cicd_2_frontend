@@ -60,57 +60,61 @@ function Register({ activeTab }) {
 
     setErrorMessage("");
     const res = await handleSubmit("login/", data, "Login successful!");
-    if(res) {
+    if (res) {
       localStorage.setItem("token", res.token);
+      window.location.href = "/main";
     }
   };
 
   return (
     <>
       <Loader show={loading} />
-      <div className={styles.main}>
-        <input
-          type="checkbox"
-          id={styles.chk}
-          checked={isChecked}
-          onChange={() => setIsChecked(!isChecked)}
-          aria-hidden="true"
-        />
+      <div className="page-centered">
 
-        <div className={styles.signup}>
-          <form onSubmit={handleRegister}>
-            <label htmlFor={styles.chk} aria-hidden="true">
-              Sign up
-            </label>
-            <input type="text" name="username" placeholder="User name" required />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-            <button type="submit">Sign up</button>
-          </form>
+        <div className={`${styles.main} `}>
+          <input
+            type="checkbox"
+            id={styles.chk}
+            checked={isChecked}
+            onChange={() => setIsChecked(!isChecked)}
+            aria-hidden="true"
+          />
+
+          <div className={styles.signup}>
+            <form onSubmit={handleRegister}>
+              <label htmlFor={styles.chk} aria-hidden="true">
+                Sign up
+              </label>
+              <input type="text" name="username" placeholder="User name" required />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+              <button type="submit">Sign up</button>
+            </form>
+          </div>
+
+          <div className={styles.login}>
+            <form onSubmit={handleLogin}>
+              <label htmlFor={styles.chk} aria-hidden="true">
+                Login
+              </label>
+              <input type="text" name="username" placeholder="Username" required />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+              <button type="submit">Login</button>
+            </form>
+          </div>
+
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+
         </div>
-
-        <div className={styles.login}>
-          <form onSubmit={handleLogin}>
-            <label htmlFor={styles.chk} aria-hidden="true">
-              Login
-            </label>
-            <input type="text" name="username" placeholder="Username" required />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-            <button type="submit">Login</button>
-          </form>
-        </div>
-
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
-
       </div>
     </>
   );

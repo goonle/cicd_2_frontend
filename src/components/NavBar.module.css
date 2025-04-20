@@ -1,0 +1,21 @@
+
+.logout {
+    position: absolute;
+    float: right;
+    top: 20px;
+    right: 20px;
+    padding: 10px 16px;
+    background: #0c3b61;           /* Soft red-pink */
+    color: white;                  /* White text */
+    border: none;                 /* No border */
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background 0.3s ease;
+    margin: 10px 30px;
+  }
+  
+  .logout:hover {
+    background: #962709;          /* Slightly deeper red on hover */
+  }
