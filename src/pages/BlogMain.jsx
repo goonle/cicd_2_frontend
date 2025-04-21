@@ -85,7 +85,7 @@ const BlogMain = () => {
     return (
         <>
             <NavBar />
-            {showCard && <BlogCard blog={selectBog} clickClose={handleCloseCard} />}
+            {showCard && <BlogCard blog={selectBog} clickClose={handleCloseCard} callbackFunc={refreshBlogs}/>}
             <Loader show={loading} />
             {showDetail && <BlogDetail type={detailType} clickClose={handleCloseDetail} callbackFunc={refreshBlogs} />}
             <div className={"page-centered"}>
