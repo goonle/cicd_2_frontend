@@ -45,13 +45,6 @@ const BlogMain = () => {
     }
 
     const handlePostClick = () => {
-        const type = "create";
-        const id = null;
-        const title = null;
-        const content = null;
-        const author = null;
-        const likes_count = null;
-
         setShowDetail(true);
         setDetailType("create");
     }
