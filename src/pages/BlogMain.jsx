@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AUTH_GET} from '../utils/api-helper';
+import { AUTH_GET } from '../utils/api-helper';
 import { useToast } from '../context/ToastContext';
 import Loader from '../components/Loader';
 import styles from './BlogMain.module.css';
@@ -21,10 +21,30 @@ const BlogMain = () => {
     const [showCard, setShowCard] = useState(false);
 
     useEffect(() => {
+
+        const fetchBlogs = () => {
+            const successFunc = (res) => {
+                handleToast("Blogs fetched successfully", "success");
+                setBlogs(res.data);
+                //testcode
+                setSelectBlog(res.data[0]);
+            }
+            const errorFuc = (err) => {
+                handleToast("Error fetching blogs", "error");
+                console.error('Error fetching blogs:', err);
+            }
+
+            const finallyFunc = () => {
+                setLoading(false);
+            }
+
+            setLoading(true);
+            AUTH_GET("blogs/", successFunc, errorFuc, finallyFunc);
+        }
         fetchBlogs();
     }, []);
 
-    const fetchBlogs = () => {  
+    const fetchBlogs = () => {
         const successFunc = (res) => {
             handleToast("Blogs fetched successfully", "success");
             setBlogs(res.data);
@@ -35,7 +55,7 @@ const BlogMain = () => {
             handleToast("Error fetching blogs", "error");
             console.error('Error fetching blogs:', err);
         }
-    
+
         const finallyFunc = () => {
             setLoading(false);
         }
@@ -65,15 +85,15 @@ const BlogMain = () => {
     return (
         <>
             <NavBar />
-            {showCard && <BlogCard blog={selectBog} clickClose={handleCloseCard}/>}
+            {showCard && <BlogCard blog={selectBog} clickClose={handleCloseCard} />}
             <Loader show={loading} />
-            {showDetail &&<BlogDetail type={detailType} clickClose={handleCloseDetail} callbackFunc={refreshBlogs}/>}
+            {showDetail && <BlogDetail type={detailType} clickClose={handleCloseDetail} callbackFunc={refreshBlogs} />}
             <div className={"page-centered"}>
                 <div >
                     <h1 className={styles.title}>Blog List</h1>
                     <div className={styles.post} onClick={handlePostClick}>Post</div>
                     <div className={`${styles.card}`}>
-                        <table style={{ width: '100%', textAlign: 'left', tableLayout: 'fixed'}}>
+                        <table style={{ width: '100%', textAlign: 'left', tableLayout: 'fixed' }}>
                             <colgroup>
                                 <col style={{ width: '50%' }} />
                                 <col style={{ width: '25%' }} />
@@ -94,7 +114,7 @@ const BlogMain = () => {
                                         <td colSpan={4} className={styles.empty}> No blogs found.</td>
                                     </tr>
                                     :
-                                    blogs.map(blog => <BlogListItem key={blog.id} blog={blog} onClick={()=>handleBlogClick(blog)} />)
+                                    blogs.map(blog => <BlogListItem key={blog.id} blog={blog} onClick={() => handleBlogClick(blog)} />)
                                 }
                             </tbody>
                         </table>
