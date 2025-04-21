@@ -42,7 +42,7 @@ const BlogMain = () => {
             AUTH_GET("blogs/", successFunc, errorFuc, finallyFunc);
         }
         fetchBlogs();
-    }, [handleToast]);
+    }, []);
 
     const fetchBlogs = () => {
         const successFunc = (res) => {
@@ -116,6 +116,12 @@ const BlogMain = () => {
                                     :
                                     blogs.map(blog => <BlogListItem key={blog.id} blog={blog} onClick={() => handleBlogClick(blog)} />)
                                 }
+                                {blogs.length < 6 &&
+                                    Array.from({ length: 6 - blogs.length }).map((_, i) => (
+                                        <tr key={`blank-${i}`}>
+                                            <td colSpan={4} style={{ height: "50px" }}></td>
+                                        </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>
