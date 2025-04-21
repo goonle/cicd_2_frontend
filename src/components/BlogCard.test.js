@@ -34,7 +34,7 @@ describe("BlogCard Component", () => {
     });
 
     it("renders blog content correctly in view mode", async () => {
-        AUTH_GET_ONE.mockImplementation((_, __, success) => success(mockBlog));
+        AUTH_GET_ONE.mockImplementation((_, __, ___, success) => success(mockBlog));
 
         renderWithToast(
           <BlogCard
@@ -51,8 +51,8 @@ describe("BlogCard Component", () => {
       
 
     it("switches to edit mode and submits updated blog", async () => {
-        AUTH_GET_ONE.mockImplementation((_, __, success) => success(mockBlog));
-        AUTH_PUT.mockImplementation((_, __, success) => success({ data: updatedBlog }));
+        AUTH_GET_ONE.mockImplementation((_, __, ___,success) => success(mockBlog));
+        AUTH_PUT.mockImplementation((_, __, ___,success) => success({ data: updatedBlog }));
 
         renderWithToast(
             <BlogCard

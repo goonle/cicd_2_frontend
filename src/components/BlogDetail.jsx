@@ -29,10 +29,6 @@ const BlogDetail = (props) => {
         AUTH_POST(`blogs/`, blog, successFunc, errorFunc, finallyFunc);
 
     }
-    if (props.type === "create") {
-
-    }
-
 
     return (
         <div className={styles.modal}>

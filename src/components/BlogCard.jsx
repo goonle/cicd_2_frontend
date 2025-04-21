@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './BlogCard.module.css';
-import { AUTH_PUT, AUTH_GET_ONE } from '../utils/api-helper';
+import { AUTH_PUT, AUTH_GET_ONE, AUTH_DELETE_ONE } from '../utils/api-helper';
 import { useToast } from '../context/ToastContext';
 import Loader from './Loader';
 
@@ -26,7 +26,7 @@ const BlogCard = (props) => {
 
     AUTH_GET_ONE("blogs/", blog.id, successFunc, errorFunc)
 
-  }, [blog.id]); // fetch only when blog.id changes
+  }, [blog.id, handleToast]); // fetch only when blog.id changes
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ const BlogCard = (props) => {
     const blog = { title, content };
 
     const successFunc = (res) => {
-      props.callbackFunc(res.data);
+      props.callbackFunc();
       handleToast("Blog updated successfully", "success");
       setMode("view");
       setBlogData(res.data);
@@ -48,7 +48,18 @@ const BlogCard = (props) => {
     }
 
     setLoading(true);
-    AUTH_PUT(`blogs/${blogData.id}/`, blog, successFunc, errorFunc);
+    AUTH_PUT(`blogs/`, blogData.id, blog, successFunc, errorFunc);
+  }
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    const successFunc = ()=> {
+      setMode("view");
+      props.callbackFunc();
+      props.clickClose();
+    }
+    setLoading(true);
+    AUTH_DELETE_ONE("blogs/", blogData.id, successFunc)
   }
 
   return (
@@ -71,7 +82,7 @@ const BlogCard = (props) => {
                   {mode === "view" ?
                     <>
                       <button onClick={() => { setMode("edit") }}>Edit</button>
-                      <button >Delete</button>
+                      <button onClick={handleDelete}>Delete</button>
                     </> :
                     <button type="submit">Save</button>
                   }

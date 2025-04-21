@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
 import ToastMessage from "../components/ToastMessage";
 
 const ToastContext = createContext();
@@ -12,7 +12,7 @@ export const ToastProvider = ({ children }) => {
   const [toastType, setToastType] = useState("info");
   const [showToast, setShowToast] = useState(false);
 
-  const handleToast = (message, type) => {
+  const handleToast = useCallback((message, type) => {
     setToastMessage(message);
     setToastType(type);
     setShowToast(true);
@@ -20,7 +20,7 @@ export const ToastProvider = ({ children }) => {
     setTimeout(() => {
       setShowToast(false);
     }, 3000); // Hide after 3 seconds
-  };
+  }, []);
 
   return (
     <ToastContext.Provider value={{handleToast : handleToast}}>
