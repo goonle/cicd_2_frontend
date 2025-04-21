@@ -51,7 +51,6 @@ const BlogMain = () => {
         const content = null;
         const author = null;
         const likes_count = null;
-        const blog = { type, id, title, content, author, likes_count };
 
         setShowDetail(true);
         setDetailType("create");
