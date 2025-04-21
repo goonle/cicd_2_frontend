@@ -30,7 +30,7 @@ function Register({ activeTab }) {
       return response.data;
     } catch (error) {
       handleToast(`An error occurred. Please try again.`, "error");
-      console.log(`Request failed:`, error);
+      // console.log(`Request failed:`, error);
       setErrorMessage(`Request failed: ${error.message}`);
       return null;
     } finally {
