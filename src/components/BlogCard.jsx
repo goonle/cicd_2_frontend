@@ -26,7 +26,7 @@ const BlogCard = (props) => {
 
     AUTH_GET_ONE("blogs/", blog.id, successFunc, errorFunc)
 
-  }, [blog.id]); // fetch only when blog.id changes
+  }, [blog.id, handleToast]); // fetch only when blog.id changes
 
   const handleSubmit = (e) => {
     e.preventDefault();

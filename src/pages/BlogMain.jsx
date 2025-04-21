@@ -42,7 +42,7 @@ const BlogMain = () => {
             AUTH_GET("blogs/", successFunc, errorFuc, finallyFunc);
         }
         fetchBlogs();
-    }, []);
+    }, [handleToast]);
 
     const fetchBlogs = () => {
         const successFunc = (res) => {
