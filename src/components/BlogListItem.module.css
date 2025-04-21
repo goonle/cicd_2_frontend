@@ -1,0 +1,7 @@
+tr.itemRow td{
+    height:50px;
+    max-height: 50px;
+}
+tr.itemRow:hover {
+    background-color: #f0f0f0;
+}

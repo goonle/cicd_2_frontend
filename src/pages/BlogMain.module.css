@@ -1,0 +1,46 @@
+.title {
+    font-size: 2rem;
+    color: #ddd;
+    text-align: center;
+}
+.card {
+    height: 60vh;
+    width: 50vw;
+}
+.card > table {
+    background: rgba(255, 255, 255, 0.05); /* semi-transparent light */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* subtle border */
+    border-radius: 15px;
+    min-height:100%;
+}
+.card > table > thead > tr> th {
+    padding: 10px;
+    font-size: 1.2rem;
+    color: #aaa;
+}
+.card > table > thead > tr> td {
+    padding: 10px;
+    color: #bbb;
+}
+.empty {
+    vertical-align: top;
+    padding-left: 20px;
+    font-size: 1.2rem;
+    color: #ddd;
+}
+.post {
+    float: right;
+    padding: 10px 16px;
+    background: #0c3b61;           /* Soft red-pink */
+    color: white;                  /* White text */
+    border: none;                 /* No border */
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background 0.3s ease;
+    margin-bottom: 20px;
+}
+.post:hover {
+    background: #2b63ca;    
+}

@@ -11,7 +11,14 @@ import {
 import Register from "./Register";
 import axios from "axios";
 import { ToastProvider } from "../context/ToastContext";
+
 jest.mock("axios");
+
+// ✅ Mock window.location.href to prevent jsdom crash
+beforeAll(() => {
+  delete window.location;
+  window.location = { href: "" };
+});
 
 const renderWithToast = (ui) => {
   return render(
@@ -29,18 +36,16 @@ describe("Register Component", () => {
   });
 
   it("submits the login form successfully", async () => {
-    // Mock axios response
-    axios.post.mockResolvedValue({ data: { message: "Login successful" } });
+    // Mock axios response with token
+    axios.post.mockResolvedValue({ data: { token: "fake-token" } });
 
     renderWithToast(<Register activeTab="login" />);
 
-    // Find the login form
     const loginLabel = screen.getByText("Login", { selector: "label" });
     expect(loginLabel).toBeVisible();
 
     const loginForm = loginLabel.closest("form");
 
-    // Find inputs and button
     const usernameInput = within(loginForm).getByPlaceholderText("Username");
     const passwordInput = within(loginForm).getByPlaceholderText("Password");
     const submitButton = within(loginForm).getByRole("button", {
@@ -57,6 +62,9 @@ describe("Register Component", () => {
         { username: "testuser", password: "password123" }
       );
     });
+
+    // ✅ Assert that redirection was attempted
+    expect(window.location.href).toBe("/main");
   });
 
   it("shows error message on login failure", async () => {
@@ -69,7 +77,6 @@ describe("Register Component", () => {
 
     const loginForm = loginLabel.closest("form");
 
-    // Get username, password input fields, and submit button
     const usernameInput = within(loginForm).getByPlaceholderText("Username");
     const passwordInput = within(loginForm).getByPlaceholderText("Password");
     const submitButton = within(loginForm).getByRole("button", {
@@ -80,7 +87,6 @@ describe("Register Component", () => {
     fireEvent.change(passwordInput, { target: { value: "password123" } });
     fireEvent.click(submitButton);
 
-    // Wait for the axios call to complete and check if it was called with the correct parameters
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith(
         expect.stringContaining("login/"),
@@ -88,7 +94,6 @@ describe("Register Component", () => {
       );
     });
 
-    // Check that the error message is displayed
     await waitFor(() => {
       expect(screen.getByText(/Login failed/i)).toBeInTheDocument();
     });
